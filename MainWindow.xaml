@@ -1,21 +1,43 @@
 ﻿<Window x:Class="XamlPlayground.MainWindow"
+        x:Name="Window"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:XamlPlayground"
+        xmlns:clr="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <!--
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
+    -->
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
-        <vm:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVisConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <vm:ViewModelLocator x:Key="ViewModelLocator" />
+        <vm:TestValueConverter x:Key="TestValueConverter" />
+        <vm:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
         <vm:MainWindowViewModel x:Key="MainWindowViewModel" />
+        <clr:String  x:Key="EmailDisabledByPolicy">EmailDisabledByPolicy_Text</clr:String>
     </Window.Resources>
+
+    <Frame Source="TestPage.xaml"></Frame>
+        
+    <!--
     <Grid>
         <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="10,22,0,0" VerticalAlignment="Top" Width="131" Visibility="{Binding IsButtonVisible, Converter={StaticResource BoolToVisConverter}}" Height="55" />
-        <Button x:Name="button2" Content="Button" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Width="131" Visibility="{Binding Path=IsButtonVisible, Source={StaticResource MainWindowViewModel}, Converter={StaticResource InverseBoolToVisConverter}}" Height="55" />
+        <Button x:Name="button2" Content="Button" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Width="131" Visibility="{Binding Source={StaticResource ViewModelLocator}, Path=Foo.MainWindowViewModel.IsButtonVisible, Converter={StaticResource InverseBoolToVisibilityConverter}, FallbackValue=Collapsed}" Height="55" />
+        <TextBlock Text="{Binding Converter={StaticResource TestValueConverter}, ConverterParameter={StaticResource EmailDisabledByPolicy}}"  TextWrapping="Wrap" Width="150" Height="20" />
     </Grid>
+
+    <StackPanel Margin="10">
+        <TextBox Name="txtValue" Text="Hello" AcceptsReturn="False" />
+        <WrapPanel Margin="0,10">
+            <TextBlock Text="Value: " FontWeight="Bold" />
+            <TextBlock Text="{Binding Path=AcceptsReturn, ElementName=txtValue}" TextWrapping="Wrap" />
+        </WrapPanel>
+        <Button Visibility="{Binding ElementName=Window, Path=IsTheButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Width="100" Height="20" Content="Test" />
+    </StackPanel>
+    -->
 </Window>

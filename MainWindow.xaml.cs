@@ -25,11 +25,17 @@ namespace XamlPlayground
         {
             InitializeComponent();
         }
+
+        public bool IsTheButtonVisible => false;
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public class MainWindowViewModel
     {
-        public bool IsButtonVisible => true;
-        
+        public bool IsButtonVisible => false;
     }
 }
